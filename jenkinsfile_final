@@ -10,13 +10,13 @@ pipeline {
       stage('checkout') {
             steps {
                 echo 'Cloning GIT HUB Repo '
-				git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit13.git'
+				git branch: 'main', url: 'https://github.com/Nagarajumc/Telecom.git'
             }  
         }
 		
 		
 		
-	 stage('sonar') {
+	 stage('sonar scan') {
             steps {
                 echo 'scanning project'
                 sh 'ls -ltr'
@@ -96,3 +96,4 @@ pipeline {
     }
 
 }
+
