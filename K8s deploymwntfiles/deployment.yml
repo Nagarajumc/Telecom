@@ -1,12 +1,10 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-name
-  labels:
-    app: app-name
+  namespace: app-name
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     matchLabels:
       app: app-name
@@ -16,10 +14,58 @@ spec:
         app: app-name
     spec:
       containers:
-      - name: image-app-name
-        image: Nagarajumc/build:13:5
-        ports:
-        - containerPort: 8080
+        - name: app-name
+          image: image1/telecom-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          env:
+            - name: APPAUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APPAUTH_URL
+            - name: APPAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: APPAUTH_SECRET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          startupProbe:
+            httpGet:
+              path: /
+              port: 3000
+            failureThreshold: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 25
+            periodSeconds: 20
+
 
   
 
