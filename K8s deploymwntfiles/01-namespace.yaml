@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: easyshop
+  name: app-name
   labels:
-    name: easyshop
+    name: app-name
     environment: production
