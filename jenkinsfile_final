@@ -45,7 +45,11 @@ pipeline {
             }
         }
 		
-		
+		stage('Scan Image') {
+                 steps {
+                     sh 'trivy image nagarajumc/telecom:latest --severity HIGH,CRITICAL'
+                                       }
+                                 }
        stage('Push to Dockerhub') {
             steps {
 			 script {
@@ -96,5 +100,6 @@ pipeline {
     }
 
 }
+
 
 
