@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mc-app
+  name: app-name
   labels:
-    app: mc-app
+    app: app-name
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: mc-app
+      app: app-name
   template:
     metadata:
       labels:
-        app: mc-app
+        app: app-name
     spec:
       containers:
-      - name: mc-app
-        image: devopshubg333/batch13:5
+      - name: image-app-name
+        image: Nagarajumc/build:13:5
         ports:
         - containerPort: 8080
 
